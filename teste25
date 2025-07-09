@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delícias Express - Lanchonete</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff6b35;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23f7931e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='6' fill='url(%23grad)'/%3E%3Cpath d='M16 6c-1.1 0-2 0.9-2 2s0.9 2 2 2 2-0.9 2-2-0.9-2-2-2zm-6 4c-1.1 0-2 0.9-2 2v12c0 1.1 0.9 2 2 2h12c1.1 0 2-0.9 2-2V12c0-1.1-0.9-2-2-2H10zm2 3h8v2h-8v-2zm0 3h8v2h-8v-2zm0 3h6v2h-6v-2z' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 107, 53, 0.85);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+        
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(255,107,53,0.9), rgba(247,147,30,0.9)), url('https://www.transparenttextures.com/patterns/food.png');
+            background-size: auto, 200px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40,167,69,0.4);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(40,167,69,0.6);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: #333;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 2px;
+        }
+        
+        /* Menu */
+        #menu {
+            background: #f8f9fa;
+        }
+        
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .category-btn.active,
+        .category-btn:hover {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border-color: #ff6b35;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255,107,53,0.3);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+        
+        .menu-item-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+        
+        .menu-item-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-item h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .menu-item p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+        
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+        
+        .order-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .order-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(40,167,69,0.3);
+        }
+        
+        /* About */
+        #about {
+            background: white;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-image {
+            height: 400px;
+            background: linear-gradient(45deg, rgba(255,107,53,0.9), rgba(247,147,30,0.9)), url('https://www.transparenttextures.com/patterns/subtle-zebra-3d.png') center/cover;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ff6b35;
+        }
+        
+        .feature h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .feature p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Contact */
+        #contact {
+            background: #f8f9fa;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .contact-item i {
+            font-size: 1.8rem;
+            margin-right: 1.5rem;
+            color: #ff6b35;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .contact-item p {
+            margin: 0;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,107,53,0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-link {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 4px 10px rgba(255,107,53,0.4);
+        }
+
+        /* Cart */
+        .cart-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+            display: flex;
+            justify-content: flex-end;
+            pointer-events: none;
+            transition: background-color 0.4s ease;
+        }
+        .cart-container.show {
+            pointer-events: all;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .cart {
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .cart.show {
+            transform: translateX(0);
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .cart-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-cart-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.3s;
+        }
+        .close-cart-btn:hover {
+            color: #333;
+        }
+        
+        #cartItems {
+            padding: 1rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .cart-item-name {
+            font-weight: 500;
+        }
+        .cart-item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .remove-item-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .remove-item-btn:hover {
+            background: #c82333;
+        }
+
+        .cart-empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+        
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 2px solid #e9ecef;
+            background: #f8f9fa;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .cart-total-price {
+            color: #ff6b35;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1.1rem;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+        }
+        
+        .cart-toggle {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .cart-toggle:hover {
+             background: rgba(255,255,255,0.2);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 73px;
+                right: 0;
+                width: 100%;
+                background: rgba(51, 51, 51, 0.95);
+                backdrop-filter: blur(5px);
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-in-out;
+            }
+            .nav-links.active {
+                max-height: 500px; /* Adjust as needed */
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links a, .nav-links .cart-toggle {
+                display: block;
+                padding: 1.5rem;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+             .nav-links .cart-toggle {
+                border: none;
+             }
+            
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            .about-image {
+                grid-row: 1; /* Move image to top on mobile */
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#home" class="logo">🍔 Delícias Express</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#menu">Cardápio</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#contact">Contato</a></li>
+                <li>
+                    <button class="cart-toggle" onclick="toggleCart()">
+                        🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Sabores que Conquistam!</h1>
+                    <p>Os melhores lanches da cidade, feitos com amor e ingredientes frescos</p>
+                    <a href="#menu" class="cta-button">Ver Cardápio</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="menu">
+            <div class="container">
+                <h2 class="section-title scroll-reveal">Nosso Cardápio</h2>
+                
+                <div class="menu-categories scroll-reveal">
+                    <button class="category-btn active" onclick="filterMenu('all', this)">Todos</button>
+                    <button class="category-btn" onclick="filterMenu('hamburgers', this)">Hambúrguers</button>
+                    <button class="category-btn" onclick="filterMenu('lanches', this)">Lanches</button>
+                    <button class="category-btn" onclick="filterMenu('bebidas', this)">Bebidas</button>
+                    <button class="category-btn" onclick="filterMenu('porcoes', this)">Porções</button>
+                </div>
+
+                <div class="menu-grid" id="menuGrid">
+                    <div class="menu-item scroll-reveal" data-category="hamburgers">
+                        <div class="menu-item-image">🍔</div>
+                        <div class="menu-item-content">
+                            <h3>X-Burger Clássico</h3>
+                            <p>Pão, hambúrguer artesanal 150g, queijo prato, alface, tomate e nosso molho especial da casa.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 18,90</span>
+                                <button class="order-btn" onclick="addToCart('X-Burger Clássico', 18.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="hamburgers">
+                        <div class="menu-item-image">🍔</div>
+                        <div class="menu-item-content">
+                            <h3>X-Bacon Especial</h3>
+                            <p>Pão, hambúrguer artesanal 150g, fatias de bacon crocante, queijo cheddar, alface, tomate e molho barbecue.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 22,90</span>
+                                <button class="order-btn" onclick="addToCart('X-Bacon Especial', 22.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="hamburgers">
+                        <div class="menu-item-image">🍔</div>
+                        <div class="menu-item-content">
+                            <h3>X-Tudo Supremo</h3>
+                            <p>Pão, 2 hambúrguers de 150g, bacon, queijo, ovo, presunto, alface, tomate e molho especial.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 26,90</span>
+                                <button class="order-btn" onclick="addToCart('X-Tudo Supremo', 26.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="lanches">
+                        <div class="menu-item-image">🥪</div>
+                        <div class="menu-item-content">
+                            <h3>Misto Quente</h3>
+                            <p>O clássico pão de forma na chapa com presunto e queijo derretido na manteiga.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 12,90</span>
+                                <button class="order-btn" onclick="addToCart('Misto Quente', 12.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="lanches">
+                        <div class="menu-item-image">🌭</div>
+                        <div class="menu-item-content">
+                            <h3>Hot Dog Especial</h3>
+                            <p>Pão macio, duas salsichas, purê de batata, queijo ralado, milho, vinagrete e batata palha.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 15,90</span>
+                                <button class="order-btn" onclick="addToCart('Hot Dog Especial', 15.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="lanches">
+                        <div class="menu-item-image">🥙</div>
+                        <div class="menu-item-content">
+                            <h3>Beirute de Filé de Frango</h3>
+                            <p>Pão sírio grande, tiras de filé de frango, queijo, presunto, alface, tomate e maionese temperada.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 19,90</span>
+                                <button class="order-btn" onclick="addToCart('Beirute de Frango', 19.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="bebidas">
+                        <div class="menu-item-image">🥤</div>
+                        <div class="menu-item-content">
+                            <h3>Refrigerante Lata 350ml</h3>
+                            <p>Escolha entre Coca-Cola, Guaraná Antarctica, Fanta Laranja ou Sprite.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 5,90</span>
+                                <button class="order-btn" onclick="addToCart('Refrigerante Lata', 5.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="bebidas">
+                        <div class="menu-item-image">🧃</div>
+                        <div class="menu-item-content">
+                            <h3>Suco Natural 500ml</h3>
+                            <p>Feito na hora. Laranja, limão, abacaxi com hortelã ou maracujá.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 8,90</span>
+                                <button class="order-btn" onclick="addToCart('Suco Natural', 8.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="menu-item scroll-reveal" data-category="bebidas">
+                        <div class="menu-item-image">💧</div>
+                        <div class="menu-item-content">
+                            <h3>Água Mineral</h3>
+                            <p>Garrafa de 500ml, com ou sem gás.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 3,90</span>
+                                <button class="order-btn" onclick="addToCart('Água Mineral', 3.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="porcoes">
+                        <div class="menu-item-image">🍟</div>
+                        <div class="menu-item-content">
+                            <h3>Batata Frita com Cheddar e Bacon</h3>
+                            <p>Porção generosa de batata frita crocante coberta com queijo cheddar cremoso e bacon em cubos.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 24,90</span>
+                                <button class="order-btn" onclick="addToCart('Batata com Cheddar e Bacon', 24.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="porcoes">
+                        <div class="menu-item-image">🍗</div>
+                        <div class="menu-item-content">
+                            <h3>Nuggets de Frango</h3>
+                            <p>12 unidades de nuggets crocantes por fora e macios por dentro. Acompanha molho rosé.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 18,90</span>
+                                <button class="order-btn" onclick="addToCart('Nuggets de Frango', 18.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item scroll-reveal" data-category="porcoes">
+                        <div class="menu-item-image">🧅</div>
+                        <div class="menu-item-content">
+                            <h3>Onion Rings</h3>
+                            <p>Anéis de cebola empanados e dourados, sequinhos e crocantes. Acompanha molho barbecue.</p>
+                            <div class="menu-item-footer">
+                                <span class="price">R$ 16,90</span>
+                                <button class="order-btn" onclick="addToCart('Onion Rings', 16.90)">Pedir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title scroll-reveal">Nossa História</h2>
+                <div class="about-content">
+                    <div class="about-text scroll-reveal">
+                        <p>Bem-vindo à <strong>Delícias Express</strong>! Nascemos da paixão por lanches saborosos e do desejo de oferecer uma experiência única para nossos clientes. Tudo começou em uma pequena cozinha, com a missão de criar os hambúrgueres mais suculentos e os lanches mais criativos da região.</p>
+                        <p>Utilizamos apenas ingredientes frescos e selecionados, desde o pão macio até a carne artesanal e os molhos exclusivos, preparados diariamente em nossa cozinha. Acreditamos que a qualidade está nos detalhes e, por isso, cada pedido é preparado com o máximo de cuidado e carinho.</p>
+                    </div>
+                    <div class="about-image scroll-reveal">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                </div>
+                <div class="features scroll-reveal">
+                    <div class="feature">
+                        <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+                        <h3>Ingredientes Frescos</h3>
+                        <p>Nossos vegetais, carnes e pães são selecionados diariamente para garantir o máximo de sabor e qualidade.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><i class="fa-solid fa-motorcycle"></i></div>
+                        <h3>Delivery Rápido</h3>
+                        <p>Seu lanche favorito chega quentinho e rápido no conforto da sua casa. Peça e comprove!</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
+                        <h3>Feito com Amor</h3>
+                        <p>Cada lanche é preparado com paixão pela nossa equipe, que ama o que faz e se dedica a cada detalhe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title scroll-reveal">Entre em Contato</h2>
+                <div class="contact-content">
+                    <div class="contact-info scroll-reveal">
+                        <h3>Fale Conosco</h3>
+                        <p style="margin-bottom: 2rem; color: #666;">Estamos prontos para atender você! Escolha o melhor canal abaixo ou envie uma mensagem pelo formulário.</p>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <h4>Endereço</h4>
+                                <p>Rua dos Sabores, 123 - Centro<br>Cidade Saborosa, ES</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <div>
+                                <h4>WhatsApp</h4>
+                                <p>(27) 99988-7766</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                             <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contato@deliciasexpress.com.br</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form scroll-reveal" action="#" method="POST">
+                        <h3>Mande uma Mensagem</h3>
+                        <div class="form-group">
+                            <label for="name">Seu Nome</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Seu E-mail</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Sua Mensagem</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p>&copy; 2024 Delícias Express. Todos os direitos reservados.</p>
+            <p>Desenvolvido com ❤️</p>
+        </div>
+    </footer>
+
+    <div class="cart-container" id="cartContainer">
+        <div class="cart" id="cart">
+            <div class="cart-header">
+                <h2>Meu Carrinho</h2>
+                <button class="close-cart-btn" onclick="toggleCart()">&times;</button>
+            </div>
+            <div id="cartItems">
+                <p class="cart-empty-message">Seu carrinho está vazio.</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span class="cart-total-price" id="cartTotal">R$ 0,00</span>
+                </div>
+                <a href="#" class="checkout-btn">Finalizar Pedido</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+       <i class="fa-solid fa-check-circle"></i> Item adicionado ao carrinho!
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- LÓGICA DO MENU MOBILE ---
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Fecha o menu mobile ao clicar em um link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // --- LÓGICA DAS ANIMAÇÕES DE SCROLL ---
+        const scrollElements = document.querySelectorAll('.scroll-reveal');
+
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (
+                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+            );
+        };
+
+        const displayScrollElement = (element) => {
+            element.classList.add('revealed');
+        };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                }
+            });
+        };
+        
+        // Executa na carga inicial e no scroll
+        handleScrollAnimation();
+        window.addEventListener('scroll', handleScrollAnimation);
+    });
+
+    // --- LÓGICA DO FILTRO DO CARDÁPIO ---
+    function filterMenu(category, btnElement) {
+        const menuItems = document.querySelectorAll('.menu-item');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        // Atualiza o botão ativo
+        categoryBtns.forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        // Filtra os itens do menu
+        menuItems.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            if (category === 'all' || itemCategory === category) {
+                item.style.display = 'flex'; // Usar flex para manter o layout
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // --- LÓGICA DO CARRINHO DE COMPRAS ---
+    let cart = [];
+
+    const cartContainer = document.getElementById('cartContainer');
+    const cartElement = document.getElementById('cart');
+    const cartItemsElement = document.getElementById('cartItems');
+    const cartCountElement = document.getElementById('cartCount');
+    const cartTotalElement = document.getElementById('cartTotal');
+
+    function addToCart(name, price) {
+        // Verifica se o item já existe no carrinho
+        const existingItem = cart.find(item => item.name === name);
+
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+        
+        updateCart();
+        showToast();
+    }
+    
+    function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        updateCart();
+    }
+
+    function updateCart() {
+        cartItemsElement.innerHTML = ''; // Limpa o carrinho
+
+        if (cart.length === 0) {
+            cartItemsElement.innerHTML = '<p class="cart-empty-message">Seu carrinho está vazio.</p>';
+        } else {
+             cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.quantity}x ${item.name}</div>
+                        <div class="cart-item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
+                    </div>
+                    <button class="remove-item-btn" onclick="removeFromCart('${item.name}')">&times;</button>
+                `;
+                cartItemsElement.appendChild(itemElement);
+            });
+        }
+
+        // Calcula e atualiza o total
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        cartTotalElement.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+        // Atualiza o contador do carrinho no header
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountElement.innerText = totalItems;
+    }
+
+    function toggleCart() {
+        cartContainer.classList.toggle('show');
+        cartElement.classList.toggle('show');
+    }
+    
+    // Fecha o carrinho se clicar fora dele
+    cartContainer.addEventListener('click', (event) => {
+        if (event.target === cartContainer) {
+            toggleCart();
+        }
+    });
+
+    // --- LÓGICA DA NOTIFICAÇÃO (TOAST) ---
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000); // A notificação desaparece após 3 segundos
+    }
+    
+    // Inicializa o carrinho na carga da página
+    updateCart();
+
+    </script>
+</body>
+</html>
